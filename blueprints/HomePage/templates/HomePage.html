@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/home-page-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="tariffs-container">
+            <div class="first-tariff">
+                <img class="tariff-image" src="static/1st_tariff.png">
+            </div>
+            <div class="second-tariff">
+                <img class="tariff-image" src="static/2nd_tariff.png">
+            </div>
+            <div class="third-tariff">
+                <img class="tariff-image" src="static/3rd_tariff.png">
+            </div>
+        </div>
+        <div class="company-text-container">
+            <h1 class="company-heading">Our company, Rosla Technologies!</h1>
+            <p class="company-text">
+                <br>Welcome to <b>Rosla Technologies</b> — your partner in green energy and smart living.<br><br> We specialize in <b>solar panel installation and maintenance</b>, helping you harness the power of the sun.
+                Need support for your electric vehicle? We’ve got you covered with <b>EV charger installation and upkeep</b>.<br><br>
+                Take control of your home’s energy use with our <b>smart energy management systems.</b><br>
+                Explore our <b>Green Energy & Technology</b> page to stay informed on the latest sustainable products and tips to reduce your carbon footprint.<br>
+                Book <b>consultations and installations</b> directly through our website — quick, easy, and hassle-free.<br><br>
+                Curious about your impact? Use our <b>Carbon Footprint Calculator</b> to see how you measure up.<br>
+                Want to track your spending? Our <b>Energy Tracking Calculator</b> helps you stay on top of daily energy costs.<br>
+                We believe green tech should be for everyone — that's why our site includes <b>accessibility features</b>, such as high-contrast colors and a dyslexia-friendly font.<br><br>
+                Sign up for an account to <b>manage your data, appointments, and services all in one place.</b><br>
+                At Rosla Technologies, we’re not just powering homes — we’re empowering people.
+            </p>
+        </div>
+        <div class="carbon-footprint-calculator-container">
+            <h1 class="form-title">Carbon footprint calculator</h1>
+            <div class="carbon-footprint-calculator-text">
+                <h1>Track Your Impact with Our Carbon Footprint Calculator</h1>
+                <p>Our carbon footprint calculator helps you understand how your daily choices—like travel, energy use, and diet—affect the planet. By measuring your environmental impact, you can make more informed decisions and take simple steps toward reducing emissions. Whether you're just curious or committed to living more sustainably, our tool is an easy way to start making a difference. Small changes add up—see where you stand and where you can improve.</p>
+                <a href="/CarbonCalculator"><button class="carbon-calculator-button" >Use Our Carbon Footprint Calculator Now!</button></a>
+            </div>
+        </div>
+        <div class="energy-tracking-calculator-container">
+            <h1 class="form-title">Energy tracking calculator</h1>
+            <div class="energy-tracking-calculator-text">
+                <h1>Stay in Control with Our Energy Tracking Calculator</h1>
+                <p>Our energy tracking calculator lets you monitor how much energy you’re using at home or work. By identifying where and how energy is consumed, you can find easy ways to cut waste, save money, and reduce your environmental impact. Whether you're aiming to lower your bills or live more sustainably, this tool gives you the insights you need to take action. Smarter energy use starts here.</p>
+                <a href="/EnergyCalculator"><button class="carbon-calculator-button" >Use Our Energy Tracking Calculator Now!</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

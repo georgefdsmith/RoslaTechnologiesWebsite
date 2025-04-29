@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carbon Footprint Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/carbon-footprint-calculator-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="/static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="carbon-footprint-calculator-container">
+            <h1 class="form-title">Carbon footprint calculator</h1>
+            <div class="carbon-footprint-calculator">
+                <form class="calculator-form" action="/CarbonCalculator" method="POST">
+                    <div style="margin-top: 30px;" class="calculator-input-form-container">
+                        <p style="font-size: 18px;" class="form-text">how many years have you owned a car?</p>
+                        <select name="years-owning-a-car" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="3.4848">1 - 5</option>
+                            <option class="option" value="6.9696">6 - 10</option>
+                            <option class="option" value="10.4544">11 - 15</option>
+                            <option class="option" value="13.9392">16 - 20</option>
+                            <option class="option" value="17.424">21- 25</option>
+                            <option class="option" value="20.9088">26 - 30</option>
+                            <option class="option" value="24.3936">31 - 35</option>
+                            <option class="option" value="27.8784">36 - 40</option>
+                            <option class="option" value="31.3632">41 - 45</option>
+                            <option class="option" value="34.848">50+</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;" class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">What type of housing do you live in (if you have moved pick the one you lived in for longer)</p>
+                        <select name="type-of-housing" class="calculator-input-form">
+                            <option class="option" value="3">small apartment (sleeps 1 - 2)</option>
+                            <option class="option" value="4">Large apartment (sleeps 3 - 4)</option>
+                            <option class="option" value="4">small house (sleeps 2 - 3)</option>
+                            <option class="option" value="5">Large house (sleeps 4 - 5+)</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">How many years of your life have you spent eating meat?</p>
+                        <select name="years-eating-meat" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="18.65">1 - 10</option>
+                            <option class="option" value="55.95">11 - 20</option>
+                            <option class="option" value="93.25">21 - 30</option>
+                            <option class="option" value="130.55">31 - 40</option>
+                            <option class="option" value="167.85">41 - 50</option>
+                            <option class="option" value="205.15">51 - 60</option>
+                            <option class="option" value="242.45">61 - 70</option>
+                            <option class="option" value="279.75">71 - 80+</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;"  class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">how often have you traveled long distances on average throughout your life (around 20+ miles)</p>
+                        <select name="long-distance-travel" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="5">1 - 2 a month</option>
+                            <option class="option" value="30">1 - 2 a week</option>
+                            <option class="option" value="70">3 - 4 a week</option>
+                            <option class="option" value=100>5 - 6 a week</option>
+                            <option class="option" value="150">7 - 8 a week</option>
+                            <option class="option" value="190">9 - 10 a week</option>
+                            <option class="option" value="230">11 - 12 a week</option>
+                            <option class="option" value="270">13 - 14 a week</option>
+                            <option class="option" value="310">15 - 16+ a week</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;" class="calculator-input-form-container">
+                        <p style="font-size: 17px;" class="form-text">have you primarily used cars, trains, buses for long distance travel if any?</p>
+                        <select name="type-of-travel" class="calculator-input-form">
+                            <option class="option" value="0">none</option>
+                            <option class="option" value="0.00006">trains</option>
+                            <option class="option" value="0.0004">cars</option>
+                            <option class="option" value="0.0001">buses</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 20px;" class="form-text">how old are you?</p>
+                        <select name="age" class="calculator-input-form">
+                            <option class="option" value="5.5">1 - 10</option>
+                            <option class="option" value="15.5">11 - 20</option>
+                            <option class="option" value="25.5">21 - 30</option>
+                            <option class="option" value="35.5">31 - 40</option>
+                            <option class="option" value="45.5">41 - 50</option>
+                            <option class="option" value="55.5">51 - 60</option>
+                            <option class="option" value="65.5">61 - 70</option>
+                            <option class="option" value="75.5">71 - 80+</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="submit" class="calculator-submit-button">
+                    <div class="answer-container">
+                        {% if carbon_footprint %}
+                            <p style="font-size: 20px;" class="form-text">Your carbon footprint is:  <b>{{carbon_footprint}} tonnes of carbon or {{flights_around_the_world}} flights around the world!</b> </p>
+                        {% else %}
+                            <p style="font-size: 20px;" class="form-text">Press submit to see your answer</p>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

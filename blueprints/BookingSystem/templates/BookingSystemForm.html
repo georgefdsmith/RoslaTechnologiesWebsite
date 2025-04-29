@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/booking-page-form-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/BookingSystem/Book"><button class="nav-bar-button">Back</button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+        </div>
+    </div>
+    <div class="main-content">
+        <h1 style="position: relative; left: -1%;">{{date_time[:2]}} {{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date_time[3:]|int]}}</h1>
+        <form class="submit-form-container" action="/BookingSystem/Form/{{date_time}}/{{user_id}}/{{user_name}}/{{user_address}}" method="POST">
+            <div class="submit-container">
+                <div class="service-dropdown-container">
+                    <select class="select-service-dropdown" name="service-button" required>
+                        <option value="solar-panels">Solar panels</option>
+                        <option value="EV-stations">EV stations</option>
+                        <option value="smart-home">Smart home</option>
+                    </select>
+                </div>
+                <div class="description-container">
+                    <input class="description" type="text" name="description" placeholder="Describe the job, e.g. Want to install solar panels on the roof" required>
+                </div>
+                <div class="submit-button-container">
+                    <input class="submit-button" type="submit">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

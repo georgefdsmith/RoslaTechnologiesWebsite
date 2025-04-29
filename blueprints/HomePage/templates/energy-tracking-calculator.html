@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Tracking Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/energy-tracking-calculator-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="/static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="energy-tracking-calculator-container">
+            <h1 class="form-title">Energy tracking calculator</h1>
+            <div class="energy-tracking-calculator">
+                <form class="calculator-form" action="/EnergyCalculator" method="POST">
+                    <div style="margin-top: 30px;" class="calculator-input-form-container">
+                        <p style="font-size: 18px;" class="form-text">how many hours a day on average did you have the heating on last week?</p>
+                        <select name="hours-using-heating" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="1.5">1 - 2</option>
+                            <option class="option" value="3.5">3 - 4</option>
+                            <option class="option" value="5.5">5 - 6</option>
+                            <option class="option" value="7.5">7 - 8</option>
+                            <option class="option" value="9.5">9- 10</option>
+                            <option class="option" value="11.5">11 - 12+</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">How many computers are in your home?</p>
+                        <select name="computers-owned-in-household" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="0.43">1</option>
+                            <option class="option" value="0.86">2</option>
+                            <option class="option" value="1.29">3</option>
+                            <option class="option" value="1.72">4</option>
+                            <option class="option" value="2.15">5+</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;"  class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">how many hours do you have your lights on per day on average?</p>
+                        <select name="hours-running-lights" class="calculator-input-form">
+                            <option class="option" value="0">0</option>
+                            <option class="option" value="0.03">1-2</option>
+                            <option class="option" value="0.06">3-4</option>
+                            <option class="option" value="0.10">5-6</option>
+                            <option class="option" value="0.14">7-8</option>
+                            <option class="option" value="0.18">9-10</option>
+                            <option class="option" value="0.22">11-12</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;" class="calculator-input-form-container">
+                        <p style="font-size: 17px;" class="form-text">how many fridges do you own?</p>
+                        <select name="amount-of-fridges" class="calculator-input-form">
+                            <option class="option" value="0.45">1</option>
+                            <option class="option" value="0.9">2</option>
+                            <option class="option" value="1.35">3+</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 20px;" class="form-text">how many freezers you do own?</p>
+                        <select name="amount-of-freezers" class="calculator-input-form">
+                            <option class="option" value="0.23">1</option>
+                            <option class="option" value="0.46">2</option>
+                            <option class="option" value="0.69">3+</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 20px;" class="form-text">do you own and use a washing a machine?</p>
+                        <select name="washing-machines" class="calculator-input-form">
+                            <option class="option" value="0.45">yes</option>
+                            <option class="option" value="0">no</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 20px;" class="form-text">do you own and use a tumble dryer?</p>
+                        <select name="tumble-dryer" class="calculator-input-form">
+                            <option class="option" value="3.10">yes</option>
+                            <option class="option" value="0">no</option>
+                        </select>
+                    </div>
+                    <div class="calculator-input-form-container">
+                        <p style="font-size: 20px;" class="form-text">do you own and use a dishwasher?</p>
+                        <select name="dishwasher" class="calculator-input-form">
+                            <option class="option" value="1.36">yes</option>
+                            <option class="option" value="0">no</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center;" class="calculator-input-form-container">
+                        <p style="font-size: 15px;" class="form-text">What type of housing do you live in? (if you have moved pick the one you lived in for longer)</p>
+                        <select name="type-of-housing" class="calculator-input-form">
+                            <option class="option" value="0.75">small apartment (sleeps 1 - 2)</option>
+                            <option class="option" value="1.25">Large apartment (sleeps 3 - 4)</option>
+                            <option class="option" value="1.5">small house (sleeps 2 - 3)</option>
+                            <option class="option" value="2.0">Large house (sleeps 4 - 5+)</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="submit" class="calculator-submit-button">
+                    <div class="answer-container">
+                        {% if energy_cost %}
+                            <p style="font-size: 20px;" class="form-text">Your energy usage per day costs you:  <b>£{{energy_cost}}</b> </p>
+                        {% else %}
+                            <p style="font-size: 20px;" class="form-text">Press submit to see your answer</p>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/booking-page-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="/static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="calender-container">
+            <div class="calender">
+                <div class="month-toggle-button-container">
+                    <a href="/BookingSystem/Book?month={{(selected_month - 1) % 12}}">
+                        <button class="month-toggle-button"><</button>
+                    </a>
+                        <p class="month-name">{{["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][selected_month]}}</p>
+                    <a href="/BookingSystem/Book?month={{(selected_month + 1) % 12}}">
+                        <button class="month-toggle-button">></button>
+                    </a>
+                </div>
+                <form class="calender-form" action="/BookingSystem/Book" method="POST">
+                    {% for i in range(days_in_month_array[selected_month]) %}
+                        <div class="button-container">
+                            <p style="margin: 0px;">{{i + 1}}</p>
+                                <a href="/BookingSystem/Book">
+                                    {% if i <= 8 %}
+                                        {% if '0' + (i + 1)|string + "-" + selected_month|string in booked_dates or week_days[i%7] == 'S' or selected_month|int < today[:2]|int and i < today[3:]|int or selected_month|int + 1 < today[:2]|int %}
+                                            <button type="reset" class="week-day-button-booked" name="selected_day" value="0{{i + 1}}-{{selected_month}}">{{week_days[i%7]}}</button>
+                                        {% else %}
+                                            <button type="submit" class="week-day-button-free" name="selected_day" value="0{{i + 1}}-{{selected_month}}">{{week_days[i%7]}}</button>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if (i + 1)|string + '-' + selected_month|string in booked_dates or week_days[i%7] == 'S'  or selected_month|int < today[:2]|int and i + 1 < today[3:]|int or selected_month|int + 1 < today[:2]|int %}
+                                            <button type="reset" class="week-day-button-booked" name="selected_day" value="{{i + 1}}-{{selected_month}}">{{week_days[i%7]}}</button>
+                                        {% else %}
+                                            <button type="submit" class="week-day-button-free" name="selected_day" value="{{i + 1}}-{{selected_month}}">{{week_days[i%7]}}</button>
+                                        {% endif %}
+                                    {% endif %}
+                                </a>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gateway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/account-page-gateway-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="/static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Enter password to access account details:</h1>
+        <p style="color: red;">{{flash}}</p>
+        <form class="account-form" action="/UserManager/change_account_details" method="POST">
+            <input class="input-field" type="password" placeholder="password" name="gateway_password">
+            <button class="submit-button" type="submit">submit</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

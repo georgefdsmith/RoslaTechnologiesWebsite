@@ -1,0 +1,116 @@
+html
+{
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar
+{
+    display: none;  /* Safari and Chrome */
+}
+
+body
+{
+    font-family: "Lexend", sans-serif;
+    margin: 0;
+}
+
+
+
+.nav-bar
+{
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+}
+
+.nav-bar-button-home
+{
+    font-family: "Lexend", sans-serif;
+    font-size: 20px;
+    height: 100%;
+    width: 150px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+
+.nav-bar-button
+{
+    font-family: "Lexend", sans-serif;
+    font-size: 20px;
+    height: 100%;
+    width: 275px;
+    padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.view-account-button
+{
+    height: 100%;
+    width: auto;
+    background: transparent;
+    cursor: pointer;
+    border: 0px;
+    font-family: "Lexend", sans-serif;
+    font-size: 20px;
+    border: 0px;
+    text-align: center;
+}
+
+account-dropdown-option
+{
+    font-family: "Lexend", sans-serif;
+    font-size: 20px;
+}
+
+
+.main-content
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.account-form-1
+{
+    width: 600px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.account-form-2
+{
+    margin-left: 50px;
+    width: 150px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submit-button
+{
+    margin-top: 20px;
+    height: 30px;
+    width: 50%;
+}
+
+.input-field
+{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.booked-appointment-container
+{
+    margin-bottom: 100px;
+}

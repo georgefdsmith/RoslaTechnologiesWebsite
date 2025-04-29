@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/information-page-style.css"/>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-bar-home-button">
+            <a href="/"><button class="nav-bar-button-home"><img style="width: 150%; height: 50%;" src="/static/RolsaTechnologiesLogo.png"></button></a>
+        </div>
+        <div class="nav-bar-buttons-container" style="display: flex;">
+            <a href="/InformationPage/Information"><button class="nav-bar-button">Green Energy/Technology</button></a>
+            {% if current_user.is_authenticated %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/BookingSystem/Book"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" class="nav-bar-button">Book Our Services!</button></a>
+            {% else %}
+                <a style="display: flex; justify-content: center; align-items: center; width: 250px; text-decoration: none;" href="/LoginAccount/Login"><button style="border-radius: 20px; border: 1px solid black; background-color: #0583F2; height: 60%; width: 80%;" onclick="displayAlert('Make an account first!')" class="nav-bar-button">Book Our Services!</button></a>
+            {% endif %}
+            <form action="/UserManager/Account" method="POST">
+                <select id="select" name="page-redirect" class="view-account-button"> <!--onchange="this.form.submit()">-->
+                    {% if current_user.is_authenticated %}
+                        <option value="">{{current_user.username}}</option>
+                        <option class="account-dropdown-option" value="UserManager.change_account_details">Account details</option>
+                        <option class="account-dropdown-option" value="UserManager.change_booked_appointments">Booked appointments</option>
+                        <option class="account-dropdown-option" value="UserManager.logout">Logout</option>
+                    {% else %}
+                        <option value="">Make an account!</option>
+                        <option class="account-dropdown-option"  value="RegisterPage.register_page">Register Account</option>
+                        <option class="account-dropdown-option"  value="LoginPage.login_page">Login Account</option>
+                    {% endif %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="banner">
+            <img class="banner-image" src="/static/banner.png">
+        </div>
+        <div class="tariffs-container">
+            <div class="first-tariff">
+                <img class="tariff-image" src="/static/1st_tariff.png">
+            </div>
+            <div class="second-tariff">
+                <img class="tariff-image" src="/static/2nd_tariff.png">
+            </div>
+            <div class="third-tariff">
+                <img class="tariff-image" src="/static/3rd_tariff.png">
+            </div>
+        </div>
+        <div class="informative-text-container">
+            <h1 style="font-size: 1.75vw;">Green energy products currently on the market</h1>
+            <div class="green-energy">
+                <div class="green-energy-text-container">
+                    <p class="green-energy-text">
+                        Green energy products are transforming the way we generate and use power.<br><br>
+                        Solar panels are becoming more efficient and affordable, allowing more households to reduce their reliance on fossil fuels. Wind turbines, both large and small, provide clean electricity for homes and businesses.<br><br>
+                        Electric vehicles now have longer battery life and faster charging, making them a practical alternative to gas-powered cars. Home battery storage, such as Tesla’s Powerwall, lets homeowners store excess solar energy for later use.<br><br>
+                        Heat pumps offer an energy-efficient way to heat and cool homes, while smart home technology helps optimize energy consumption. With innovations like hydrogen fuel cells and bioenergy systems, the transition to renewable energy is accelerating.<br>
+                    </p>
+                </div>
+                <div class="green-energy-image-container">
+                    <img class="informative-section-products-image" src="/static/cheap-solar-panels-for-sale.jpg">
+                </div>
+            </div>
+            <h1 style="font-size: 1.75vw;">How to reduce emissions</h1>
+            <div class="reduce-emissions">
+                <div class="reduce-emissions-image-container">
+                    <img class="informative-section-emissions-image" src="/static/bike-to-work.png">
+                </div>
+                <div class="reduce-emissions-text-container">
+                    <p class="reduce-emissions-text">
+                        <br><br>
+                        Reducing emissions is easier than you think. Walking, biking, or taking public transport instead of driving can make a big difference. Using energy-efficient appliances, LED lights, and smart thermostats helps lower energy consumption at home.<br><br>
+                        Cutting back on meat and dairy reduces your carbon footprint, while choosing reusable bags, bottles, and containers minimizes waste. Supporting sustainable brands, buying second-hand, and shopping locally all help lower emissions from production and transportation.<br><br>
+                        Opting for renewable energy, recycling, composting, and advocating for climate-friendly policies can create an even bigger impact. Small changes add up, and every effort helps protect the planet.<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+document.getElementById("select").addEventListener("change", ({ target }) => target.form.submit());
+
+function displayAlert(x) {
+    alert(x);
+}
+
+</script>

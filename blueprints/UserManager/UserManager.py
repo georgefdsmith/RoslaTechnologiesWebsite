@@ -124,9 +124,15 @@ def change_booked_appointments():
     # deletes appointments in the past
     for x in range(len(all_dates)):
 
-        if int(all_dates[x][1][:2]) < int(today[:2]) and int(all_dates[x][1][3:]) < int(today[3:]):
+        print(int(all_dates[x][1][:2]) - 2, int(today[3:]), int(today[:2]), int(all_dates[x][1][3:]) + 1)    
 
+        if int(all_dates[x][1][:2]) < int(today[3:]) and int(all_dates[x][1][3:]) < int(today[:2]):
+            
             c.execute("DELETE FROM bookedServices WHERE appointment_id = ?", (all_dates[x][0],))
+
+            conn.commit()
+
+            return redirect(url_for("UserManager.change_booked_appointments"))
 
     if request.method == "POST":
 
